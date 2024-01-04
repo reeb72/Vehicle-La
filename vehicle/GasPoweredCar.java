@@ -15,7 +15,7 @@ public abstract class GasPoweredCar extends Car {
             double fuelCapacityGallons) {
         super(make, model, startingOdometerValue);
         this.mpg = mpg;
-        this.fuelCapacityGallons = fuelCapacityGallons;
+        fuel = fuelCapacityGallons;
 
         if (mpg <= 0 || fuelCapacityGallons <= 0) {
             throw new IllegalArgumentException("Cannot accept any negative values");
@@ -31,7 +31,7 @@ public abstract class GasPoweredCar extends Car {
     public GasPoweredCar(String make, String model, double mpg, double fuelCapacityGallons) {
         super(make, model);
         this.mpg = mpg;
-        this.fuelCapacityGallons = fuelCapacityGallons;
+        fuel = fuelCapacityGallons;
 
         if (mpg <= 0 || fuelCapacityGallons <= 0) {
             throw new IllegalArgumentException("Cannot accept any negative values");
@@ -110,6 +110,6 @@ public abstract class GasPoweredCar extends Car {
      * mpg and the number of miles passed as an argument.
      */
     protected void decreaseFuelLevel(double miles) {
-        fuel -= miles;
+        fuel -= miles/mpg;
     }
 }
