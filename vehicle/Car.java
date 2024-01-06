@@ -116,7 +116,7 @@ public abstract class Car {
         int days = 0;
 
         for (int i = 0; i < milesEachDay.size(); i++) {
-            while (canDrive(milesEachDay.get(i))) {
+            if (canDrive(milesEachDay.get(i))) {
                 drive(milesEachDay.get(i));
                 days++;
             }
