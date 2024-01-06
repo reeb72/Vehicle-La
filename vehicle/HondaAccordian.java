@@ -25,7 +25,7 @@ public class HondaAccordian extends GasPoweredCar {
      * superclass toString. Don’t copy-and-paste the same code here.
      */
     public String toString() {
-        return yearMade + super.toString();
+        return yearMade + " " + super.toString();
     }
 
 }

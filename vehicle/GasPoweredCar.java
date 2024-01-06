@@ -13,13 +13,16 @@ public abstract class GasPoweredCar extends Car {
 
     public GasPoweredCar(String make, String model, double startingOdometerValue, double mpg,
             double fuelCapacityGallons) {
+
         super(make, model, startingOdometerValue);
-        this.mpg = mpg;
-        fuel = fuelCapacityGallons;
 
         if (mpg <= 0 || fuelCapacityGallons <= 0) {
             throw new IllegalArgumentException("Cannot accept any negative values");
         }
+
+        this.mpg = mpg;
+        this.fuelCapacityGallons = fuelCapacityGallons;
+        fuel = fuelCapacityGallons;
     }
 
     /**
@@ -30,13 +33,14 @@ public abstract class GasPoweredCar extends Car {
      */
     public GasPoweredCar(String make, String model, double mpg, double fuelCapacityGallons) {
         super(make, model);
-        this.mpg = mpg;
-        fuel = fuelCapacityGallons;
 
         if (mpg <= 0 || fuelCapacityGallons <= 0) {
             throw new IllegalArgumentException("Cannot accept any negative values");
         }
 
+        this.mpg = mpg;
+        this.fuelCapacityGallons = fuelCapacityGallons;
+        fuel = fuelCapacityGallons;
     }
 
     /**
@@ -48,15 +52,15 @@ public abstract class GasPoweredCar extends Car {
      */
     public void drive(double miles) {
         if (miles < 0) {
-            throw new IllegalArgumentException("Yo cannot rive negative miles");
+            throw new IllegalArgumentException("Yo cannot drive negative miles");
         }
-        if (miles > (mpg * fuel)) {
-            throw new IllegalArgumentException("You cannot drive this far... Not enough fuel");
+        if ((miles / mpg) > fuel){
+            throw new IllegalArgumentException("Too many miles, cut down your ambitions");
         }
 
         if (canDrive(miles)) {
-            this.decreaseFuelLevel(miles / mpg);
             addMiles(miles);
+            this.decreaseFuelLevel(miles);
         }
 
     }
@@ -110,6 +114,6 @@ public abstract class GasPoweredCar extends Car {
      * mpg and the number of miles passed as an argument.
      */
     protected void decreaseFuelLevel(double miles) {
-        fuel -= miles/mpg;
+        fuel -= (miles/mpg);
     }
 }

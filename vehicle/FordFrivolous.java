@@ -23,9 +23,11 @@ public class FordFrivolous extends GasPoweredCar implements SelfDriving, Flying 
 
         if(getRemainingRange() / 2 < miles){
             drive(getRemainingRange() / 2);
+            decreaseFuelLevel(getRemainingRange() / 2);
         }
-        else{
-            drive(miles / 2);
+        else if(getRemainingRange() / 2 > miles){
+            drive(miles);
+            decreaseFuelLevel(miles);
         }
     }
 

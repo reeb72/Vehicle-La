@@ -1,11 +1,12 @@
 package vehicle;
+
 import java.util.List;
 
 public abstract class Car {
 
     private String make;
     private String model;
-    private double startingOdometerValue;
+    private double odometer;
 
     /**
      * Creates a car with starting total miles on the odometer.
@@ -13,20 +14,19 @@ public abstract class Car {
      * @throws IllegalArgumentException if startingOdometerValue is negative
      */
     public Car(String make, String model, double startingOdometerValue) throws IllegalArgumentException {
+        this.make = make;
+        this.model = model;
         if (startingOdometerValue < 0) {
             throw new IllegalArgumentException("Odometer Cannot have a negative value");
         }
-
-        this.make = make;
-        this.model = model;
-        this.startingOdometerValue = startingOdometerValue;
+        odometer = startingOdometerValue;
     }
 
     /** Defaults startingOdometerValue to 0. */
     public Car(String make, String model) {
         this.make = make;
         this.model = model;
-        this.startingOdometerValue = 0;
+        odometer = 0;
     }
 
     /**
@@ -40,7 +40,7 @@ public abstract class Car {
         if (miles < 0) {
             throw new IllegalArgumentException("No negative miles chap");
         }
-        return getRemainingRange() >= miles;
+        return (getRemainingRange() >= miles);
     }
 
     /**
@@ -63,7 +63,7 @@ public abstract class Car {
 
     /** Returns how many miles have been driven so far (odometer). */
     public double getOdometerMiles() {
-        return this.startingOdometerValue;
+        return odometer;
     }
 
     /** Returns the make of the car. */
@@ -91,7 +91,8 @@ public abstract class Car {
         if (miles < 0) {
             throw new IllegalArgumentException("No negative miles chap");
         }
-        startingOdometerValue += miles;
+
+        this.odometer += miles;
     }
 
     /**
@@ -106,13 +107,17 @@ public abstract class Car {
      *                                  is attempted.
      */
     public int roadTrip(List<Double> milesEachDay) {
-        int days = 0; 
 
         for (int i = 0; i < milesEachDay.size(); i++) {
-            if (milesEachDay.get(i) < 0) {
-                    throw new IllegalArgumentException("No negative miles you whippersnapper");
-            }
-            if(canDrive(milesEachDay.get(i))){
+            if (milesEachDay.get(i) < 0)
+                throw new IllegalArgumentException("Negative miles alert!!!");
+        }
+
+        int days = 0;
+
+        for (int i = 0; i < milesEachDay.size(); i++) {
+            while (canDrive(milesEachDay.get(i))) {
+                drive(milesEachDay.get(i));
                 days++;
             }
         }
